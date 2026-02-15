@@ -6,12 +6,35 @@ return {
   },
 
   -- These are some examples, uncomment them if you want to see them work!
-  {
+
+ {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
-      require "configs.lspconfig"
+        local capabilities = require("cmp_nvim_lsp")
+            .default_capabilities()
+
+        local on_attach = function(client, bufnr)
+            client.server_capabilities.signatureHelpProvider = false
+        end
+
+        vim.lsp.config("clangd", {
+            cmd = { "clangd", "--compile-commands-dir=build" },
+            capabilities = capabilities,
+            on_attach = on_attach,
+      })
+
+        vim.lsp.enable("clangd")
     end,
-  },
+},
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "clangd"
+      }
+    }
+  }
 
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },
