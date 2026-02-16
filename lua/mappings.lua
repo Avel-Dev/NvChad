@@ -4,6 +4,10 @@ require "nvchad.mappings"
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+vim.keymap.set("n", "<leader>fo", function()
+  require("conform").format()
+end)
+
 vim.keymap.set("v", "S", "^", { noremap = true })
 vim.keymap.set("v", "D", "$", { noremap = true })
 vim.keymap.set("n", "S", "^", { desc = "Go to line start" })
@@ -43,6 +47,8 @@ vim.keymap.set('n', '<leader>b', function() require('dap').toggle_breakpoint() e
 vim.keymap.set('n', '<leader>dr', function() require('dap').repl.open() end)
 vim.keymap.set('n', '<leader>du', function() require('dapui').toggle() end)
 vim.keymap.set("n", "<leader>de", function() require("dapui").eval() end, { desc = "Evaluate expression" })
+
+vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show type info" })
 
 vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y') -- yank to clipboard
 vim.keymap.set({ 'n', 'v' }, '<leader>p', '"+p') -- paste from clipboard
